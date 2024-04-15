@@ -11,13 +11,12 @@ import PopOverMenu from 'components/modal/PopOverMenu';
 import * as S from '../post/PostStyle';
 import * as Layout from 'components/answerFeedCard/FeedCardLayout';
 import * as FC from 'components/answerFeedCard/FeedCardStyled';
-import { DeleteButton, ButtonWrapper, PreviousButton, EmptyWindow } from './AnswerStyle.js';
+import { DeleteButton, ButtonWrapper, PreviousButton } from './AnswerStyle.js';
 
 import ClipBoardCopyMessage from 'components/ClipBoardCopyMessage.js';
 import SNSshare from 'components/SNSshare.js';
 import { pathState } from 'components/common/pathState.js';
 import { PagePath } from 'context/PathContext.js';
-import handleExtractVideoId from 'utils/ExtractYoutubeId.js';
 
 export default function Answer() {
   const [questionList, setQuestionList] = useState([]);
@@ -118,6 +117,7 @@ export default function Answer() {
   };
 
   const handleSelectPopOver = (e) => {
+    e.stopPropagation();
     //id값을 받는다.
     const nextItem = e.currentTarget.getAttribute('id');
     console.log(nextItem);
@@ -182,7 +182,6 @@ export default function Answer() {
                           element={buttonRef}
                         />
                       )}
-
                       <FC.KebabButton
                         type="button"
                         alt="케밥버튼"
