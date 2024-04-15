@@ -16,3 +16,5 @@ export default function LoginCheck() {
 
   return userID ? userID : 131; // 131은 ID 못가져왔을때의 default id
 }
+
+//수정용 주석
