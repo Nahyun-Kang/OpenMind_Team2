@@ -56,34 +56,56 @@ export function FeedCardFooter({ question }) {
     }));
   };
 
-  const handleReactionToggle = async (e) => {
-    const name = e.currentTarget.getAttribute('name');
-    const value = JSON.parse(e.currentTarget.getAttribute('value'));
-    if (value === false) {
+  const handleLikeToggle = async () => {
+    if (reaction.like === false) {
       try {
-        const data = await createReaction(question.id, name);
-        name === `like`
-          ? setReaction({
-              ...reaction,
-              likeCount: data.like,
-            })
-          : setReaction({
-              ...reaction,
-              dislikeCount: data.dislike,
-            });
+        const data = await createReaction(question.id, 'like');
+        setReaction({
+          ...reaction,
+          likeCount: data.like,
+        });
       } catch (error) {
         console.log(error);
       }
     }
-    handleReactionChange(name, value);
+    handleReactionChange('like', reaction.like);
   };
+
+  const handleDislikeToggle = async () => {
+    if (reaction.dislike === false) {
+      try {
+        const data = await createReaction(question.id, 'dislike');
+        setReaction({
+          ...reaction,
+          dislikeCount: data.dislike,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    handleReactionChange('dislike', reaction.dislike);
+  };
+
+  const debounce = (func, delay) => {
+    let timer;
+    return function () {
+      const args = arguments;
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        func.apply(this, args);
+      }, delay);
+    };
+  };
+
+  const debouncedHandleLikeToggle = debounce(handleLikeToggle, 300);
+  const debouncedHandleDislikeToggle = debounce(handleDislikeToggle, 300);
 
   return (
     <S.CardFooter>
       <S.FooterLine />
       <S.ReactionMarkWrapper>
         <S.Reaction
-          onClick={handleReactionToggle}
+          onClick={debouncedHandleLikeToggle}
           name="like"
           value={reaction.like}
           disabled={reaction.dislike}
@@ -95,7 +117,7 @@ export function FeedCardFooter({ question }) {
         </S.Reaction>
 
         <S.Reaction
-          onClick={handleReactionToggle}
+          onClick={debouncedHandleDislikeToggle}
           name="dislike"
           value={reaction.dislike}
           disabled={reaction.like}

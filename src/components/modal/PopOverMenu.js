@@ -66,19 +66,18 @@ export default function PopOverMenu({
     onClose();
   };
 
-  useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
+  // useEffect(() => {
+  //   document.addEventListener('mousedown', handleClickOutside);
 
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  });
-  const handleClickOutside = (event) => {
-    if (wrapperRef && !wrapperRef.current.contains(event.target) && event.target !== element) {
-      onClick(false);
-      // onSelect(null);
-    }
-  };
+  //   return () => {
+  //     document.removeEventListener('mousedown', handleClickOutside);
+  //   };
+  // });
+  // const handleClickOutside = (event) => {
+  //   if (wrapperRef && !wrapperRef.current.contains(event.target) && event.target !== element) {
+  //     onClick(false);
+  //   }
+  // };
 
   return (
     <Container ref={wrapperRef}>
