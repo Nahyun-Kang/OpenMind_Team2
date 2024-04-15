@@ -56,6 +56,7 @@ export function FeedCardFooter({ question }) {
     }));
   };
 
+  //like와 dislike 함수 분리
   const handleLikeToggle = async () => {
     if (reaction.like === false) {
       try {
@@ -86,6 +87,7 @@ export function FeedCardFooter({ question }) {
     handleReactionChange('dislike', reaction.dislike);
   };
 
+  //디바운싱 적용
   const debounce = (func, delay) => {
     let timer;
     return function () {
